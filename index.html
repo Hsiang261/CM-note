@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>中醫讀書筆記知識庫</title>
+    <title>中醫讀書筆記知識庫 - 終極完整版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -11,17 +11,19 @@
         .tag-btn { transition: all 0.2s; }
         .tag-btn.active { background-color: #2563eb; color: white; border-color: #2563eb; }
         .highlight { background-color: #fef08a; padding: 0 4px; border-radius: 4px; font-weight: bold; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-slate-100 text-gray-800 min-h-screen">
+<body class="bg-slate-50 text-gray-800 min-h-screen">
     <div class="max-w-7xl mx-auto p-4 md:p-8">
         <!-- Header -->
-        <header class="mb-8 bg-white p-6 rounded-2xl shadow-sm text-center">
-            <h1 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4"><i class="fa-solid fa-book-medical text-blue-600 mr-2"></i>中醫經方筆記資料庫</h1>
-            <p class="text-gray-500 mb-6">整合《打開經方這扇門》與《中醫十大類方》筆記，支援標籤篩選、關鍵字搜尋與方劑並排比較</p>
+        <header class="mb-8 bg-white p-6 rounded-2xl shadow-sm text-center border-b-4 border-blue-500">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4"><i class="fa-solid fa-book-medical text-blue-600 mr-2"></i>中醫經方筆記全庫</h1>
+            <p class="text-gray-500 mb-6 text-sm">收錄《打開經方這扇門》《十大類方》《傷寒解惑論》《李克紹傷寒講義》《被遺忘的古方》共計上百種方劑</p>
             <div class="relative w-full md:w-2/3 mx-auto">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                <input type="text" id="searchInput" placeholder="搜尋方劑、本草（如：麻黃）、病機或症狀..." class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none text-lg">
+                <input type="text" id="searchInput" placeholder="搜尋方劑、本草（如：黃耆）、病機或症狀..." class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none text-lg bg-gray-50">
             </div>
         </header>
 
@@ -30,7 +32,8 @@
             <div class="lg:col-span-1">
                 <div class="bg-white p-6 rounded-2xl shadow-sm sticky top-4">
                     <h2 class="text-xl font-bold mb-4 flex items-center border-b pb-3"><i class="fa-solid fa-tags text-blue-500 mr-2"></i> 快速篩選標籤</h2>
-                    <div id="tagsContainer" class="flex flex-wrap gap-2 max-h-[60vh] overflow-y-auto pb-4">
+                    <p class="text-xs text-gray-400 mb-3">點選標籤進行多重條件交集篩選</p>
+                    <div id="tagsContainer" class="flex flex-wrap gap-2 max-h-[65vh] overflow-y-auto pb-4 pr-2">
                         <!-- Tags injected by JS -->
                     </div>
                 </div>
@@ -40,27 +43,27 @@
             <div class="lg:col-span-3 space-y-8">
                 
                 <!-- Feature: Comparison Tool -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-blue-500">
-                    <h2 class="text-2xl font-bold mb-6 flex items-center text-slate-800"><i class="fa-solid fa-scale-balanced text-blue-500 mr-3"></i> 方劑並排對照器</h2>
-                    <p class="text-gray-500 mb-4 text-sm">選擇兩個方劑，比較其適用脈象、病機與不同書籍中的特徵。</p>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-indigo-400">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center text-slate-800"><i class="fa-solid fa-code-compare text-indigo-500 mr-3"></i> 跨書鑑別對照器</h2>
+                    <p class="text-gray-500 mb-4 text-sm">選擇兩個方劑，系統會自動標出病機與適應症的差異關鍵字。</p>
                     
                     <div class="flex flex-col md:flex-row gap-4 mb-6">
-                        <select id="compare1" class="flex-1 p-3 border border-gray-200 rounded-xl text-lg bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none"></select>
+                        <select id="compare1" class="flex-1 p-3 border border-gray-200 rounded-xl text-lg bg-slate-50 focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-gray-700"></select>
                         <div class="flex items-center justify-center">
-                            <span class="bg-gray-200 text-gray-500 font-bold px-3 py-1 rounded-full text-sm">VS</span>
+                            <span class="bg-indigo-100 text-indigo-700 font-bold px-3 py-1 rounded-full text-sm">VS</span>
                         </div>
-                        <select id="compare2" class="flex-1 p-3 border border-gray-200 rounded-xl text-lg bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none"></select>
+                        <select id="compare2" class="flex-1 p-3 border border-gray-200 rounded-xl text-lg bg-slate-50 focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-gray-700"></select>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="compareResult">
-                        <div id="comp1-content" class="p-6 bg-slate-50 border border-gray-100 rounded-xl min-h-[150px] shadow-inner text-gray-700 leading-relaxed"></div>
-                        <div id="comp2-content" class="p-6 bg-slate-50 border border-gray-100 rounded-xl min-h-[150px] shadow-inner text-gray-700 leading-relaxed"></div>
+                        <div id="comp1-content" class="p-6 bg-slate-50 border border-gray-200 rounded-xl min-h-[150px] shadow-inner text-gray-700 leading-relaxed"></div>
+                        <div id="comp2-content" class="p-6 bg-slate-50 border border-gray-200 rounded-xl min-h-[150px] shadow-inner text-gray-700 leading-relaxed"></div>
                     </div>
                 </div>
 
                 <!-- Feature: Notes List -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <h2 class="text-2xl font-bold mb-6 flex items-center text-slate-800"><i class="fa-solid fa-layer-group text-blue-500 mr-3"></i> 筆記條目 (<span id="noteCount">0</span>)</h2>
+                    <h2 class="text-2xl font-bold mb-6 flex items-center text-slate-800"><i class="fa-solid fa-layer-group text-blue-500 mr-3"></i> 筆記辭典庫 (<span id="noteCount">0</span>)</h2>
                     <div id="notesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <!-- Notes injected by JS -->
                     </div>
@@ -70,10 +73,14 @@
     </div>
 
     <script>
-        const notes = [{"formula": "抵擋湯", "tags": ["瘀血", "恥骨上壓痛", "脈有力", "腹診"], "desc": "脈象：有力。\n體徵：恥骨上壓痛。\n應用：病程長多瘀血。亦治飯量大但不大便、便秘。\n注意：西醫栓塞不等於瘀血，無壓痛不可用活血劑。"}, {"formula": "大黃䗪蟲丸", "tags": ["瘀血", "恥骨上壓痛", "脈無力", "腹診", "大黃類"], "desc": "脈象：無力。\n體徵：恥骨上壓痛。\n應用：緩消癥塊，適合久病體虛之瘀血。\n補充：《十大類方》指出此方除乾血，因久瘀故形體消瘦。"}, {"formula": "桃核承氣湯", "tags": ["瘀血", "精神神志", "腹診", "大黃類"], "desc": "特徵：其人如狂。\n應用：脾氣暴躁、突然暴怒控制不住脾氣到處吵架。亦可治牙痛。\n診斷：少腹急結（左下腹、左腹股溝壓痛）。與桂枝茯苓丸壓痛類似，但有大黃證（舌紅堅老苔焦黃），精神狀況更嚴重。"}, {"formula": "小陷胸湯", "tags": ["心下壓痛", "腹診", "黃連類", "痰飲"], "desc": "體徵：心下壓痛，無「脹」感。\n病機：痰熱互結。\n應用：消化道疾病上腹脹痛、噁心泛酸、便秘、舌根黃膩（常合柴胡陷胸湯）。\n比較：半夏瀉心以痞悶為主（大便溏），本方為痞痛（大便秘、痰黏）。"}, {"formula": "大柴胡湯", "tags": ["心下壓痛", "少陽", "脹滿", "腹診", "柴胡類"], "desc": "體徵：心下壓痛且有「脹」感、心下痞硬。\n應用：膽囊息肉、胰腺炎專病專方（常加金鈴子散、鬱金等）。發熱、胸脅苦滿、嘔吐較小柴胡重，兼裏熱實證（便秘）。\n注意：用後若腹滿不減改大承氣；心理常伴郁郁微煩（抑鬱/焦慮/狂躁）。胡老常合桂枝茯苓丸。"}, {"formula": "大黃牡丹皮湯", "tags": ["右下腹壓痛", "瘀血", "急性發炎", "腹診", "大黃類"], "desc": "體徵：右下腹壓痛。\n應用：除闌尾炎，亦治閉經（右下腹壓痛者）、男婦科急性炎症。"}, {"formula": "葦莖湯", "tags": ["肺癰", "黃痰", "咳嗽"], "desc": "症狀：黃痰、膿痰、血痰，咳即胸中隱隱痛。\n應用：老年肺炎亦屬肺癰，需注意正氣。"}, {"formula": "栝樓薤白半夏湯", "tags": ["胸痹", "肺癌", "咳嗽", "痰飲"], "desc": "應用：肺癌常胸痛效佳（需重用）。亦用於帶狀疱疹常用藥組合。"}, {"formula": "小青龍湯", "tags": ["清稀痰", "表證", "咳嗽"], "desc": "症狀：清稀泡沫痰，有表證或喉嚨癢。\n應用：乾咳無痰不代表真無痰，可能卡在裡面出不來，可用此方；看到頭痛想到鼻竇炎亦可用。"}, {"formula": "苓甘五味薑辛夏仁湯", "tags": ["清稀痰", "無表證", "咳嗽"], "desc": "症狀：清稀泡沫痰。\n診斷要點：無表證，且喉嚨不癢。"}, {"formula": "小青龍加石膏湯", "tags": ["清黏痰", "煩躁", "咳嗽"], "desc": "症狀：兼喉嚨痛、晨起黃痰但之後都清稀、偶黏痰。\n病機：咳而上氣兼煩躁。"}, {"formula": "越婢加半夏湯", "tags": ["乾咳", "咳而上氣", "咳嗽"], "desc": "症狀：咳嗽時無法平躺（咳而上氣），兼眼睛憋脹。"}, {"formula": "柴胡桂枝乾薑湯", "tags": ["厥陰", "口苦", "脈無力", "女科", "皮膚疾病", "柴胡類"], "desc": "特徵：口苦，脈無力。常見於柴胡體質者經精神緊繃、勞累過後。\n腹證：胸骨處抵抗觸痛感。腹部較鬆軟（對比柴胡桂枝湯）。\n應用：滿臉粉刺脈無力者。女性類風濕最常開處方（常合當歸芍藥散）。\n要點：食慾不振為主（吃涼的難受）。大便不成形/微結。"}, {"formula": "烏梅丸", "tags": ["厥陰", "上熱下寒", "胃病"], "desc": "特徵：心煩、手熱腳冷、口渴。\n應用：厥陰病胃病燒心。烏梅要大量用。"}, {"formula": "麻黃升麻湯", "tags": ["厥陰", "虛熱"], "desc": "特徵：手足冰涼，脈無力。\n症狀：咽痛、腹瀉、唾膿血。"}, {"formula": "當歸四逆湯", "tags": ["厥陰", "虛寒", "手足冰涼", "桂枝類"], "desc": "特徵：手足冰涼，脈細無力（脈細為血管收縮，非心臟衰弱）。\n應用：厥陰病咳嗽、類風濕。血虛肝寒頭痛（加吳茱萸生薑）。"}, {"formula": "白虎湯", "tags": ["陽明", "裏熱", "盜汗", "白虎類"], "desc": "特徵：陽明病時間（申酉戌），脈有力。舌乾燥無津。\n應用：盜汗；面部紅色粉刺；惡熱多汗煩渴之目疾、皮炎、口腔炎。"}, {"formula": "大承氣湯", "tags": ["陽明", "磨牙", "痙病", "大黃類"], "desc": "特徵：大便硬，脈有力。大黃體質（舌紅堅老苔焦黃）。\n應用：裏實精神病、腸麻痹（術後/腸梗阻）、急性感染（肺炎/腦炎）。僵直性脊椎炎伴虹膜炎。有時大便不乾也屬痙病大承氣證。"}, {"formula": "桂枝湯", "tags": ["桂枝類", "體質", "皮膚疾病"], "desc": "體質：文弱書生，白皮舌黯淡，質地柔嫩潤澤（表虛），易出汗、心腹悸動、拘急疼痛。需與伏熱（唇紅）鑑別。\n應用：發熱或自覺發熱。亦用於皮膚病、過敏性鼻炎（黃煌加五味子細辛附子，或蟬蛻）、妊娠惡阻。"}, {"formula": "小建中湯", "tags": ["桂枝類", "腹痛"], "desc": "組成：桂枝加芍藥再加飴糖。\n應用：慢性虛弱性腹痛。不宜甜食或急性嚴重腹痛者改用桂枝加芍藥湯。"}, {"formula": "桂枝加芍藥湯", "tags": ["桂枝類", "腹痛", "便秘"], "desc": "應用：裏實漸顯之腹痛；習慣性便秘。病情較小建中湯急。"}, {"formula": "桂枝加大黃湯", "tags": ["桂枝類", "腹痛", "大黃類"], "desc": "應用：持續性腹痛，拒按便秘，裏實明顯。"}, {"formula": "桂枝加龍骨牡蠣湯", "tags": ["桂枝類", "精神神志", "虛證"], "desc": "特徵：脈必見浮大無力，舌嫩紅苔薄白。確認為正虛無邪。\n比較：對比柴龍牡，本方僅為不眠、多夢（精神狀況較輕）。"}, {"formula": "溫經湯", "tags": ["桂枝類", "厥陰", "女科"], "desc": "症狀：自覺手足心熱而惡風、自汗，午後發熱感、頭痛噁心（看似熱證實有寒）。\n歸類：打開經方歸於厥陰病，吳茱萸桂枝散寒。"}, {"formula": "炙甘草湯", "tags": ["桂枝類", "心血管"], "desc": "應用：桂枝體質的心臟病（面容憔悴消瘦）。陰虛證心律失常代表方；癌症化療後。方證有便秘。"}, {"formula": "苓桂朮甘湯", "tags": ["桂枝類", "痰飲", "眩暈"], "desc": "應用：常出現於眩暈。發病急，常因精神刺激誘發。\n比較：苓桂棗甘湯（動悸沖逆最適合）；五苓散（利水作用更大）。"}, {"formula": "桂枝茯苓丸", "tags": ["桂枝類", "瘀血", "腹診"], "desc": "特徵：下腹複診不適感。伴面暗紅。\n應用：有精神狀況（如桃核承氣）。不限婦科，冠心病、糖尿病、痤瘡、銀屑病、腰椎等皆可用。"}, {"formula": "枳實薤白桂枝湯", "tags": ["桂枝類", "胸痹"], "desc": "特徵：桂枝類方的理氣方。典型桂枝舌（需與承氣/理中鑑別）。輕症為桂枝生薑枳實湯。"}, {"formula": "桂枝芍藥知母湯", "tags": ["桂枝類", "關節痛", "水腫"], "desc": "組成：桂枝加附子合麻黃加朮加防風知母。\n特徵：程度比桂枝加附子重，因有白朮麻黃，方證有腳腫。"}, {"formula": "麻黃湯", "tags": ["麻黃類", "體質", "咳嗽"], "desc": "體質：壯實、肌肉彈性、唇暗紫紅、閉汗、浮腫傾向。\n特徵：惡寒發熱併見（加衣不解），無汗而喘。\n加減：喘咳加厚朴半夏；熱證併連翹黃芩。麻黃加朮湯（浮腫明顯大便不成形）。"}, {"formula": "麻黃附子細辛湯", "tags": ["麻黃類", "附子類", "疼痛"], "desc": "應用：治冷痺（黃煌常合芍藥甘草治坐骨神經痛）。整個背部畏寒者。陽和湯之陽虛基礎。"}, {"formula": "麻杏石甘湯", "tags": ["麻黃類", "咳嗽", "皮膚疾病"], "desc": "特徵：「汗出」而喘（微微汗），舌較乾。對無發熱者亦有效。\n應用：支氣管炎（合小陷胸）、皮膚病（濕疹/尋麻疹/痤瘡）。"}, {"formula": "越婢加朮湯", "tags": ["麻黃類", "水腫"], "desc": "組成：麻杏石甘去杏加朮棗薑甘（去杏不用於喘咳）。\n比較：對比麻黃加朮，本方用於熱證，石膏制麻黃。常用於急性腎炎浮腫。"}, {"formula": "陽和湯", "tags": ["麻黃類", "陰寒"], "desc": "思路：麻黃湯證兼陰陽兩虛。\n應用：陰寒性疾病（雷諾氏、末梢神經炎）、陰疽（骨結核、風濕關節炎、椎間盤突出）。"}, {"formula": "小柴胡湯", "tags": ["柴胡類", "體質", "發熱"], "desc": "體質：偏瘦、面暗黃、情緒波動大、肌肉堅緊。\n特徵：胸脅苦滿（主觀或腹診抵抗感）、往來寒熱（主觀或客觀高低熱）、休作有時（定時發作）。心煩喜嘔，主觀症狀多。\n應用：水腫合五苓散（柴苓湯）；發熱性感染。"}, {"formula": "柴胡桂枝湯", "tags": ["柴胡類", "桂枝類", "腹診"], "desc": "特徵：兩方證併見，舌偏暗。腹部較緊張（對比柴胡桂枝乾薑湯）。\n應用：癲癇見胸脅苦滿與腹直肌拘攣。"}, {"formula": "柴胡加龍骨牡蠣湯", "tags": ["柴胡類", "精神神志", "腹診"], "desc": "特徵：臍腹動悸（甚可摸到主動脈）。舌苔黃膩乾焦，多腹滿便秘。檢查無器質病變。\n比較：比桂龍牡精神狀況更嚴重。焦慮腹脹加梔子厚朴。"}, {"formula": "四逆散", "tags": ["柴胡類", "神經性疾病"], "desc": "特徵：腹痛按了加重。手足冷（但脈有力，與四逆湯不同）。\n應用：頑固神經病（頭痛失眠嘔吐）用血府逐瘀湯。"}, {"formula": "血府逐瘀湯", "tags": ["柴胡類", "瘀血", "精神神志"], "desc": "應用：頑固性呃逆（舌暗脈弦）、頑固失眠癲癇。不一定有明顯血瘀（余秋平認作少陽氣血分瘀兼血熱）。"}, {"formula": "逍遙散", "tags": ["柴胡類", "女科"], "desc": "組成視角：當歸芍藥散 合 四逆散。"}, {"formula": "防風通聖散", "tags": ["大黃類", "皮膚疾病", "代謝"], "desc": "作用：開通孔竅使熱毒外出，兼養血活血。\n應用：單純性肥胖、高血脂、高血壓。"}, {"formula": "玉屏風散", "tags": ["黃耆類", "體質", "汗證"], "desc": "體質：浮腫鬆軟，自汗嚴重，能大量進食不耐飢。\n特徵：水濕內蘊症狀多（對比桂枝湯之痙攣痛）。\n應用：常為基礎方，加辛夷蟬蛻等治過敏性鼻炎。"}, {"formula": "防己黃耆湯", "tags": ["黃耆類", "水腫", "關節痛"], "desc": "特徵：腰以下浮腫、關節痛，反覆發作。\n比較：越婢加朮為全身性、有熱象且病程短。本方亦用於減肥。"}, {"formula": "黃耆桂枝五物湯", "tags": ["黃耆類", "桂枝類", "神經病變"], "desc": "特徵：汗出、身體重。去甘草（身腫不可用甘草），重用生薑。中老年動則喘、疲乏。\n應用：身體不仁、肢體酸麻為主（可加活血藥）。治瘡口不癒合玉屏風。"}, {"formula": "黃耆建中湯", "tags": ["黃耆類", "腹痛"], "desc": "特徵：重用芍藥緩急。\n應用：慢性腹痛，十二指腸潰瘍專方、慢性胃炎。"}, {"formula": "補中益氣湯", "tags": ["黃耆類", "柴胡類"], "desc": "特徵：脾胃內傷始得之證，體弱。為黃耆+柴胡證結合。\n比較：柴胡桂枝湯多桂枝證；本方黃耆證明顯，體力低下且慢性化。五官科疾病可用。"}, {"formula": "補陽還五湯", "tags": ["黃耆類", "瘀血"], "desc": "比較：瘀血比黃耆桂枝五物重。對比桂枝茯苓（少腹痛/面暗紅）與血府（胸悶情緒），本方多肢體運動知覺異常伴自汗浮腫。"}, {"formula": "白虎加參湯", "tags": ["白虎類"], "desc": "應用：無大熱大汗，但以渴飲為主的慢性病。"}, {"formula": "黃連解毒湯", "tags": ["黃連類", "清熱"], "desc": "體質：煩躁不安，心下痞，舌紅堅老苔黃膩乾。\n應用：急性感染熱入血分/濕熱。合四物為溫清飲（兼出血不調）。加味治頭面熱毒。"}, {"formula": "黃連湯", "tags": ["黃連類", "桂枝類", "乾薑類"], "desc": "特徵：黃連+桂枝+乾薑。汗出熱不退/煩躁（黃連）+惡風心悸氣衝（桂枝）。\n腹證：以腹痛為主，寒證多。\n舌苔：後半厚底白罩黃（濕遏熱伏，嗜酒/傷食）。"}, {"formula": "三黃瀉心湯", "tags": ["黃連類", "大黃類"], "desc": "應用：紅腫熱痛之感染化膿；熱盛出血；心腦血管精神疾患。"}, {"formula": "黃連阿膠湯", "tags": ["黃連類", "失眠"], "desc": "特徵：心中煩不得臥，入夜煩躁白天稍安。\n應用：虛熱出血（濕溫便血）；失眠伴隱性出血傾向（月經量多/紫斑）。"}, {"formula": "左金丸", "tags": ["黃連類", "胃病"], "desc": "應用：腹痛綿綿，吐酸水。若空腹發作/酸水清稀不苦，應改用小建中湯。"}, {"formula": "理中湯", "tags": ["乾薑類", "虛寒"], "desc": "特徵：苔多白膩。惡寒、吐清水、腹瀉。\n應用：急性傳染病（真寒假熱）；小兒虛熱不退/肺炎。加黃連為連理湯（兼心下痞痛苔黃膩）。"}, {"formula": "真武湯", "tags": ["附子類", "眩暈"], "desc": "特徵：但欲寐。體力低下，寒證明顯。\n比較：眩暈較半夏白朮天麻重；重於附子證（苓桂朮甘為精神誘發過則無事）。"}, {"formula": "溫膽湯", "tags": ["半夏類", "痰飲", "精神神志"], "desc": "體質：半夏體質（營養好/目大有光/眼神飄忽/主訴多怪異）。多便結、噁心嘔吐。\n應用：精神刺激誘發（PTSD），心虛膽怯型。"}, {"formula": "大半夏湯", "tags": ["半夏類", "嘔吐"], "desc": "特徵：津液不足（形容枯槁便乾），故用人參蜜。\n應用：胃反嘔吐（慢性化，程度較輕）。"}, {"formula": "半夏厚朴湯", "tags": ["半夏類", "痰飲"], "desc": "特徵：咽梗感（自覺）。\n應用：黃煌用於小兒厭食兼膽怯內向。溫病芳香化濕常用（加味藿香正氣）。"}, {"formula": "半夏瀉心湯", "tags": ["半夏類", "黃連類", "心下痞"], "desc": "特徵：心下痞為主，遇寒遇熱均不適。寒熱混雜，便溏或秘。\n應用：以腸胃症狀為主的失眠（胃不和則臥不安）。"}];
+        const notes = [{"formula": "抵擋湯", "tags": ["瘀血", "恥骨上壓痛", "脈有力", "腹診"], "desc": "脈象：有力。\n體徵：恥骨上壓痛。\n應用：病程長多瘀血。亦治飯量大但不大便、便秘。\n注意：西醫栓塞不等於瘀血，無壓痛不可用活血劑。"}, {"formula": "大黃䗪蟲丸", "tags": ["瘀血", "恥骨上壓痛", "脈無力", "腹診", "大黃類"], "desc": "脈象：無力。\n體徵：恥骨上壓痛。\n應用：緩消癥塊，適合久病體虛之瘀血。\n補充：《十大類方》指出此方除乾血，因久瘀故形體消瘦。"}, {"formula": "桃核承氣湯", "tags": ["瘀血", "精神神志", "腹診", "大黃類"], "desc": "特徵：其人如狂。\n應用：脾氣暴躁、突然暴怒控制不住脾氣到處吵架。亦可治牙痛。\n診斷：少腹急結（左下腹、左腹股溝壓痛）。與桂枝茯苓丸壓痛類似，但有大黃證（舌紅堅老苔焦黃），精神狀況更嚴重。"}, {"formula": "小陷胸湯", "tags": ["心下壓痛", "腹診", "黃連類", "痰飲"], "desc": "體徵：心下壓痛，無「脹」感。\n病機：痰熱互結。\n應用：消化道疾病上腹脹痛、噁心泛酸、便秘、舌根黃膩（常合柴胡陷胸湯）。\n比較：半夏瀉心以痞悶為主（大便溏），本方為痞痛（大便秘、痰黏）。"}, {"formula": "大柴胡湯", "tags": ["心下壓痛", "少陽", "脹滿", "腹診", "柴胡類"], "desc": "體徵：心下壓痛且有「脹」感、心下痞硬。\n應用：膽囊息肉、胰腺炎專病專方（常加金鈴子散、鬱金等）。發熱、胸脅苦滿、嘔吐較小柴胡重，兼裏熱實證（便秘）。\n注意：用後若腹滿不減改大承氣；心理常伴郁郁微煩（抑鬱/焦慮/狂躁）。胡老常合桂枝茯苓丸。\n\n【李克紹補充】\n心下急（比痞硬嚴重，下氣分之結）。便秘非關鍵（心下痞硬導致胃失降而嘔吐下利）。"}, {"formula": "大黃牡丹皮湯", "tags": ["右下腹壓痛", "瘀血", "急性發炎", "腹診", "大黃類"], "desc": "體徵：右下腹壓痛。\n應用：除闌尾炎，亦治閉經（右下腹壓痛者）、男婦科急性炎症。"}, {"formula": "葦莖湯", "tags": ["肺癰", "黃痰", "咳嗽"], "desc": "症狀：黃痰、膿痰、血痰，咳即胸中隱隱痛。\n應用：老年肺炎亦屬肺癰，需注意正氣。"}, {"formula": "栝樓薤白半夏湯", "tags": ["胸痹", "肺癌", "咳嗽", "痰飲"], "desc": "應用：肺癌常胸痛效佳（需重用）。亦用於帶狀疱疹常用藥組合。"}, {"formula": "小青龍湯", "tags": ["清稀痰", "表證", "咳嗽"], "desc": "症狀：清稀泡沫痰，有表證或喉嚨癢。\n應用：乾咳無痰不代表真無痰，可能卡在裡面出不來，可用此方；看到頭痛想到鼻竇炎亦可用。"}, {"formula": "苓甘五味薑辛夏仁湯", "tags": ["清稀痰", "無表證", "咳嗽"], "desc": "症狀：清稀泡沫痰。\n診斷要點：無表證，且喉嚨不癢。"}, {"formula": "小青龍加石膏湯", "tags": ["清黏痰", "煩躁", "咳嗽"], "desc": "症狀：兼喉嚨痛、晨起黃痰但之後都清稀、偶黏痰。\n病機：咳而上氣兼煩躁。"}, {"formula": "越婢加半夏湯", "tags": ["乾咳", "咳而上氣", "咳嗽"], "desc": "症狀：咳嗽時無法平躺（咳而上氣），兼眼睛憋脹。"}, {"formula": "柴胡桂枝乾薑湯", "tags": ["厥陰", "口苦", "脈無力", "女科", "皮膚疾病", "柴胡類"], "desc": "特徵：口苦，脈無力。常見於柴胡體質者經精神緊繃、勞累過後。\n腹證：胸骨處抵抗觸痛感。腹部較鬆軟（對比柴胡桂枝湯）。\n應用：滿臉粉刺脈無力者。女性類風濕最常開處方（常合當歸芍藥散）。\n要點：食慾不振為主（吃涼的難受）。大便不成形/微結。\n\n【傷寒解惑論補充】\n小柴胡湯證兼痰飲（胸脅滿微結，小便不利渴而不嘔，但頭汗出往來寒熱心煩）。不嘔去半夏；渴加栝樓根；微結加牡蠣；小便不利（痰結）去茯苓加乾薑；頭汗出加桂枝通陽解外。"}, {"formula": "烏梅丸", "tags": ["厥陰", "上熱下寒", "胃病"], "desc": "特徵：心煩、手熱腳冷、口渴。\n應用：厥陰病胃病燒心。烏梅要大量用。"}, {"formula": "麻黃升麻湯", "tags": ["厥陰", "虛熱", "出血"], "desc": "特徵：手足冰涼，脈無力。\n症狀：咽痛、腹瀉、唾膿血。\n\n【傷寒解惑論補充】\n組成分析：麻桂 + 歸芍玉竹天冬 + 知芩連膏 + 薑苓朮。\n符合條文：大下後，手足厥逆，咽喉不利，唾膿血，泄利不止者。\n\n【李克紹補充】\n大下後熱陷咽喉不能外達，寸沉遲。"}, {"formula": "當歸四逆湯", "tags": ["厥陰", "虛寒", "手足冰涼", "桂枝類"], "desc": "特徵：手足冰涼，脈細無力（脈細為血管收縮，非心臟衰弱）。\n應用：厥陰病咳嗽、類風濕。血虛肝寒頭痛（加吳茱萸生薑）。\n\n【傷寒解惑論補充】\n亦可用於血瘀寒凝的頭目不清。"}, {"formula": "白虎湯", "tags": ["陽明", "裏熱", "盜汗", "白虎類"], "desc": "特徵：陽明病時間（申酉戌），脈有力。舌乾燥無津。\n應用：盜汗；面部紅色粉刺；惡熱多汗煩渴之目疾、皮炎、口腔炎。"}, {"formula": "大承氣湯", "tags": ["陽明", "磨牙", "痙病", "大黃類"], "desc": "特徵：大便硬，脈有力。大黃體質（舌紅堅老苔焦黃）。\n應用：裏實精神病、腸麻痹（術後/腸梗阻）、急性感染（肺炎/腦炎）。僵直性脊椎炎伴虹膜炎。有時大便不乾也屬痙病大承氣證。\n\n【傷寒解惑論補充】\n正陽陽明（潮熱+大便硬）。小便不利，大便乍難乍易（未結者旁流，難者腸梗阻），兼喘促昏臥。若燥屎內結兼目不合為中毒，搶救時不一定要兼潮熱。\n\n【李克紹補充】\n腹滿不減（微滿懊憹改梔子厚朴）；繞臍痛；小便不利大便乍難乍易（未結者旁流）。"}, {"formula": "桂枝湯", "tags": ["桂枝類", "體質", "皮膚疾病", "太陽病", "禁忌", "加減"], "desc": "體質：文弱書生，白皮舌黯淡，質地柔嫩潤澤（表虛），易出汗、心腹悸動、拘急疼痛。需與伏熱（唇紅）鑑別。\n應用：發熱或自覺發熱。亦用於皮膚病、過敏性鼻炎（黃煌加五味子細辛附子，或蟬蛻）、妊娠惡阻。\n\n【李克紹補充】\n禁忌最重要是脈浮緊（無汗但脈不浮緊亦可用）。有人主張酒客外感用葛根芩連。"}, {"formula": "小建中湯", "tags": ["桂枝類", "腹痛"], "desc": "組成：桂枝加芍藥再加飴糖。\n應用：慢性虛弱性腹痛。不宜甜食或急性嚴重腹痛者改用桂枝加芍藥湯。"}, {"formula": "桂枝加芍藥湯", "tags": ["桂枝類", "腹痛", "便秘", "太陰病"], "desc": "應用：裏實漸顯之腹痛；習慣性便秘。病情較小建中湯急。\n\n【傷寒解惑論補充】\n太陰病誤下，脾絡鬱滯，全腹彌漫性疼痛。\n\n【李克紹補充】\n太陰誤下，表邪內陷脾絡不通，腹部彌漫痛（大實痛加大黃）。"}, {"formula": "桂枝加大黃湯", "tags": ["桂枝類", "腹痛", "大黃類"], "desc": "應用：持續性腹痛，拒按便秘，裏實明顯。\n\n【傷寒解惑論補充】\n太陰病誤下全腹彌漫痛，若較嚴重即加用此方。"}, {"formula": "桂枝加龍骨牡蠣湯", "tags": ["桂枝類", "精神神志", "虛證"], "desc": "特徵：脈必見浮大無力，舌嫩紅苔薄白。確認為正虛無邪。\n比較：對比柴龍牡，本方僅為不眠、多夢（精神狀況較輕）。"}, {"formula": "溫經湯", "tags": ["桂枝類", "厥陰", "女科"], "desc": "症狀：自覺手足心熱而惡風、自汗，午後發熱感、頭痛噁心（看似熱證實有寒）。\n歸類：打開經方歸於厥陰病，吳茱萸桂枝散寒。"}, {"formula": "炙甘草湯", "tags": ["桂枝類", "心血管"], "desc": "應用：桂枝體質的心臟病（面容憔悴消瘦）。陰虛證心律失常代表方；癌症化療後。方證有便秘。"}, {"formula": "苓桂朮甘湯", "tags": ["太陽變證", "痰飲"], "desc": "吐下後傷脾水氣不散停聚心下而逆滿，白朮助脾輸精（振振動搖）。苓桂棗甘湯不用朮因腎水乘心。"}, {"formula": "桂枝茯苓丸", "tags": ["桂枝類", "瘀血", "腹診"], "desc": "特徵：下腹複診不適感。伴面暗紅。\n應用：有精神狀況（如桃核承氣）。不限婦科，冠心病、糖尿病、痤瘡、銀屑病、腰椎等皆可用。"}, {"formula": "枳實薤白桂枝湯", "tags": ["桂枝類", "胸痹"], "desc": "特徵：桂枝類方的理氣方。典型桂枝舌（需與承氣/理中鑑別）。輕症為桂枝生薑枳實湯。"}, {"formula": "桂枝芍藥知母湯", "tags": ["桂枝類", "關節痛", "水腫"], "desc": "組成：桂枝加附子合麻黃加朮加防風知母。\n特徵：程度比桂枝加附子重，因有白朮麻黃，方證有腳腫。"}, {"formula": "麻黃湯", "tags": ["麻黃類", "體質", "咳嗽", "太陽病", "皮膚疾病", "脈象"], "desc": "體質：壯實、肌肉彈性、唇暗紫紅、閉汗、浮腫傾向。\n特徵：惡寒發熱併見（加衣不解），無汗而喘。\n加減：喘咳加厚朴半夏；熱證併連翹黃芩。麻黃加朮湯（浮腫明顯大便不成形）。\n\n【傷寒解惑論補充】\n治尋麻疹（面色反有熱色不能小汗出身必癢者，宜桂麻各半湯）。\n\n【李克紹補充】\n脈浮而數可發汗：數脈雖有化熱之勢，但兼浮，故仍可先用麻黃湯。"}, {"formula": "麻黃附子細辛湯", "tags": ["麻黃類", "附子類", "疼痛", "少陰病"], "desc": "應用：治冷痺（黃煌常合芍藥甘草治坐骨神經痛）。整個背部畏寒者。陽和湯之陽虛基礎。\n\n【李克紹補充】\n發汗力較甘草強（甘草用於得之二三日無裏證）。"}, {"formula": "麻杏石甘湯", "tags": ["麻黃類", "咳嗽", "皮膚疾病", "太陽變證", "裏熱喘"], "desc": "特徵：「汗出」而喘（微微汗），舌較乾。對無發熱者亦有效。\n應用：支氣管炎（合小陷胸）、皮膚病（濕疹/尋麻疹/痤瘡）。\n\n【李克紹補充】\n表實而喘無汗，裏熱喘而出汗（或葛根芩連湯）。"}, {"formula": "越婢加朮湯", "tags": ["麻黃類", "水腫"], "desc": "組成：麻杏石甘去杏加朮棗薑甘（去杏不用於喘咳）。\n比較：對比麻黃加朮，本方用於熱證，石膏制麻黃。常用於急性腎炎浮腫。"}, {"formula": "陽和湯", "tags": ["麻黃類", "陰寒"], "desc": "思路：麻黃湯證兼陰陽兩虛。\n應用：陰寒性疾病（雷諾氏、末梢神經炎）、陰疽（骨結核、風濕關節炎、椎間盤突出）。"}, {"formula": "小柴胡湯", "tags": ["柴胡類", "體質", "發熱", "少陽", "少陽變證", "陽明兼證", "少陽病"], "desc": "體質：偏瘦、面暗黃、情緒波動大、肌肉堅緊。\n特徵：胸脅苦滿（主觀或腹診抵抗感）、往來寒熱（主觀或客觀高低熱）、休作有時（定時發作）。心煩喜嘔，主觀症狀多。\n應用：水腫合五苓散（柴苓湯）；發熱性感染。\n\n【傷寒解惑論補充】\n表熱迫近胃周圍（半表半裡）。也治熱入血室。少陽獨有脈象：弦細（症狀不明顯時為唯一依據）。\n變證應用：胸脅滿而嘔，不大便（非實熱而是津不下達大腸）。陽脈澀陰脈弦服小建中不差（兼裏虛先補後解）。治各種原因發熱。\n\n【李克紹補充】\n脅下硬不大便而嘔（樞機不利，津不下達）。多自覺症狀。少陽陽明以嘔渴分界（嘔多屬少陽）。差後發熱多屬虛熱亦用。"}, {"formula": "柴胡桂枝湯", "tags": ["柴胡類", "桂枝類", "腹診"], "desc": "特徵：兩方證併見，舌偏暗。腹部較緊張（對比柴胡桂枝乾薑湯）。\n應用：癲癇見胸脅苦滿與腹直肌拘攣。"}, {"formula": "柴胡加龍骨牡蠣湯", "tags": ["柴胡類", "精神神志", "腹診", "少陽變證"], "desc": "特徵：臍腹動悸（甚可摸到主動脈）。舌苔黃膩乾焦，多腹滿便秘。檢查無器質病變。\n比較：比桂龍牡精神狀況更嚴重。焦慮腹脹加梔子厚朴。\n\n【傷寒解惑論補充】\n少陽病誤下導致挫傷胸陽，火邪內擾。"}, {"formula": "四逆散", "tags": ["柴胡類", "神經性疾病", "少陰病", "腹痛"], "desc": "特徵：腹痛按了加重。手足冷（但脈有力，與四逆湯不同）。\n應用：頑固神經病（頭痛失眠嘔吐）用血府逐瘀湯。\n\n【李克紹補充】\n主症為腹痛瀉利下重，不一定四逆。"}, {"formula": "血府逐瘀湯", "tags": ["柴胡類", "瘀血", "精神神志"], "desc": "應用：頑固性呃逆（舌暗脈弦）、頑固失眠癲癇。不一定有明顯血瘀（余秋平認作少陽氣血分瘀兼血熱）。"}, {"formula": "逍遙散", "tags": ["柴胡類", "女科"], "desc": "組成視角：當歸芍藥散 合 四逆散。"}, {"formula": "防風通聖散", "tags": ["大黃類", "皮膚疾病", "代謝"], "desc": "作用：開通孔竅使熱毒外出，兼養血活血。\n應用：單純性肥胖、高血脂、高血壓。"}, {"formula": "玉屏風散", "tags": ["黃耆類", "體質", "汗證"], "desc": "體質：浮腫鬆軟，自汗嚴重，能大量進食不耐飢。\n特徵：水濕內蘊症狀多（對比桂枝湯之痙攣痛）。\n應用：常為基礎方，加辛夷蟬蛻等治過敏性鼻炎。"}, {"formula": "防己黃耆湯", "tags": ["黃耆類", "水腫", "關節痛"], "desc": "特徵：腰以下浮腫、關節痛，反覆發作。\n比較：越婢加朮為全身性、有熱象且病程短。本方亦用於減肥。"}, {"formula": "黃耆桂枝五物湯", "tags": ["黃耆類", "桂枝類", "神經病變"], "desc": "特徵：汗出、身體重。去甘草（身腫不可用甘草），重用生薑。中老年動則喘、疲乏。\n應用：身體不仁、肢體酸麻為主（可加活血藥）。治瘡口不癒合玉屏風。"}, {"formula": "黃耆建中湯", "tags": ["黃耆類", "腹痛"], "desc": "特徵：重用芍藥緩急。\n應用：慢性腹痛，十二指腸潰瘍專方、慢性胃炎。"}, {"formula": "補中益氣湯", "tags": ["黃耆類", "柴胡類"], "desc": "特徵：脾胃內傷始得之證，體弱。為黃耆+柴胡證結合。\n比較：柴胡桂枝湯多桂枝證；本方黃耆證明顯，體力低下且慢性化。五官科疾病可用。"}, {"formula": "補陽還五湯", "tags": ["黃耆類", "瘀血"], "desc": "比較：瘀血比黃耆桂枝五物重。對比桂枝茯苓（少腹痛/面暗紅）與血府（胸悶情緒），本方多肢體運動知覺異常伴自汗浮腫。"}, {"formula": "白虎加參湯", "tags": ["白虎類", "陽明病", "熱結"], "desc": "應用：無大熱大汗，但以渴飲為主的慢性病。\n\n【李克紹補充】\n無大熱、背微惡寒（熱結在裏，陽氣不能外出）。"}, {"formula": "黃連解毒湯", "tags": ["黃連類", "清熱"], "desc": "體質：煩躁不安，心下痞，舌紅堅老苔黃膩乾。\n應用：急性感染熱入血分/濕熱。合四物為溫清飲（兼出血不調）。加味治頭面熱毒。"}, {"formula": "黃連湯", "tags": ["黃連類", "桂枝類", "乾薑類", "少陽病", "腹痛"], "desc": "特徵：黃連+桂枝+乾薑。汗出熱不退/煩躁（黃連）+惡風心悸氣衝（桂枝）。\n腹證：以腹痛為主，寒證多。\n舌苔：後半厚底白罩黃（濕遏熱伏，嗜酒/傷食）。\n\n【李克紹補充】\n胸中有熱胃中有邪腹中痛。黃煌指為黃連+桂枝+乾薑。"}, {"formula": "三黃瀉心湯", "tags": ["黃連類", "大黃類"], "desc": "應用：紅腫熱痛之感染化膿；熱盛出血；心腦血管精神疾患。"}, {"formula": "黃連阿膠湯", "tags": ["黃連類", "失眠"], "desc": "特徵：心中煩不得臥，入夜煩躁白天稍安。\n應用：虛熱出血（濕溫便血）；失眠伴隱性出血傾向（月經量多/紫斑）。"}, {"formula": "左金丸", "tags": ["黃連類", "胃病"], "desc": "應用：腹痛綿綿，吐酸水。若空腹發作/酸水清稀不苦，應改用小建中湯。"}, {"formula": "理中湯", "tags": ["乾薑類", "虛寒"], "desc": "特徵：苔多白膩。惡寒、吐清水、腹瀉。\n應用：急性傳染病（真寒假熱）；小兒虛熱不退/肺炎。加黃連為連理湯（兼心下痞痛苔黃膩）。"}, {"formula": "真武湯", "tags": ["附子類", "眩暈", "自汗"], "desc": "特徵：但欲寐。體力低下，寒證明顯。\n比較：眩暈較半夏白朮天麻重；重於附子證（苓桂朮甘為精神誘發過則無事）。\n\n【傷寒解惑論補充】\n陽虛水氾的自汗。可加桂枝通陽。"}, {"formula": "溫膽湯", "tags": ["痰飲", "半夏類", "精神神志", "脾胃"], "desc": "體質：半夏體質（營養好/目大有光/眼神飄忽/主訴多怪異）。多便結、噁心嘔吐。\n應用：精神刺激誘發（PTSD），心虛膽怯型。\n\n【被遺忘的古方補充】\n應用：治脾胃和肝膽，亦治心胸胃病（可合小陷胸）。\n\n【十大類方補充】\n體質：半夏體質（營養好/目大有光/眼神飄忽/主訴多怪異）。多便結、噁心嘔吐。\n應用：精神刺激誘發（PTSD），心虛膽怯型。"}, {"formula": "大半夏湯", "tags": ["半夏類", "嘔吐"], "desc": "特徵：津液不足（形容枯槁便乾），故用人參蜜。\n應用：胃反嘔吐（慢性化，程度較輕）。"}, {"formula": "半夏厚朴湯", "tags": ["半夏類", "痰飲"], "desc": "特徵：咽梗感（自覺）。\n應用：黃煌用於小兒厭食兼膽怯內向。溫病芳香化濕常用（加味藿香正氣）。"}, {"formula": "半夏瀉心湯", "tags": ["半夏類", "黃連類", "心下痞", "失眠"], "desc": "特徵：心下痞為主，遇寒遇熱均不適。寒熱混雜，便溏或秘。\n應用：以腸胃症狀為主的失眠（胃不和則臥不安）。\n\n【傷寒解惑論補充】\n濕熱，胃不和則臥不安。"}, {"formula": "大青龍湯", "tags": ["太陽兼證", "發熱", "無汗", "太陽病", "中風"], "desc": "特徵：陽氣鬱閉時間長，營衛澀滯，脈由浮緊變浮緩有力。身重但不痛，乍有輕時（異於少陰）。\n\n【李克紹補充】\n條文稱太陽中風（指有汗或陽邪），因有煩躁故稱中風。陽閉太重，營衛滯澀，脈由緊變緩，身重。"}, {"formula": "桂枝附子湯", "tags": ["太陽兼證", "疼痛", "風濕"], "desc": "特徵：身體痛，不能自轉側，脈浮虛而澀。\n\n【李克紹補充】\n大便硬（不溏）去桂加白朮。濕氣阻滯營衛故脈澀。大便溏用桂枝溫經。"}, {"formula": "桂枝加白朮湯", "tags": ["太陽兼證"], "desc": "特徵：小便自利，大便成硬（原文指桂枝附子湯證變）。"}, {"formula": "桂枝去桂加茯苓白朮湯", "tags": ["太陽兼證", "水飲"], "desc": "特徵：翕翕發熱，無汗，心下滿微痛，小便不利（為水飲）。\n\n【李克紹補充】\n服桂枝湯或下之，仍頭項強痛、心下滿微痛、小便不利：此為有形水飲內結重。"}, {"formula": "麻黃桂枝各半湯", "tags": ["太陽變證", "皮膚疾病"], "desc": "特徵：太陽病變輕，一日二三度發。不能得小汗出，身必癢（麻黃湯治尋麻疹加減法）。"}, {"formula": "桂枝二麻黃一湯", "tags": ["太陽變證"], "desc": "特徵：再日發，面無熱色。"}, {"formula": "五苓散", "tags": ["太陽變證", "水飲", "消渴", "皮膚疾病", "太陽蓄水", "痞證"], "desc": "特徵：發汗減弱三焦決瀆導致蓄水。小便不利，消渴，水入即吐，脈浮微熱。\n應用：治濕疹（因冷水灌導致皮粟）。三焦不利之蓄水。\n\n【李克紹補充】\n汗出而渴（水停三焦正津不布，氣化被傷）。邢斌指臨床常不想喝水。亦治下後傷脾蓄水之痞。"}, {"formula": "桂枝甘草湯", "tags": ["太陽變證", "心陽虛"], "desc": "特徵：叉手自冒心，欲按。"}, {"formula": "厚朴生薑甘草人參湯", "tags": ["太陽變證", "脾虛", "脹滿"], "desc": "特徵：發汗後腹脹滿（脾陽虛而氣滯）。"}, {"formula": "甘草乾薑湯", "tags": ["太陽變證", "脾虛", "嘔吐"], "desc": "特徵：脾陽傷而吐逆不止。"}, {"formula": "四逆湯", "tags": ["太陽變證", "少陰病", "虛寒"], "desc": "特徵：汗下後下利清穀。少陰火虛（心火不足下利不渴）。"}, {"formula": "乾薑附子湯", "tags": ["太陽變證", "煩躁", "虛寒", "陽虛"], "desc": "特徵：汗下後白天煩躁，夜間安靜（陰盛格陽）。\n\n【李克紹補充】\n汗下後煩躁，日重夜輕（衛欲行外而力不足）。日夜皆煩躁為陰陽兩虛（茯苓四逆湯）。"}, {"formula": "茯苓四逆湯", "tags": ["太陽變證", "煩躁", "虛寒"], "desc": "特徵：汗下後整日煩躁。"}, {"formula": "桂枝加桂湯", "tags": ["太陽變證", "奔豚"], "desc": "特徵：燒針被寒，奔豚。"}, {"formula": "茯苓甘草湯", "tags": ["太陽變證", "厥陰病", "水飲", "太陽蓄水"], "desc": "特徵：水停胃中，汗出不渴。厥陰病厥而心下悸者，先治水。\n\n【李克紹補充】\n汗出不渴，水停胃中（兼心下悸）。厥而心下悸先治水（防轉腹瀉）。"}, {"formula": "調胃承氣湯", "tags": ["太陽變證", "陽明實熱", "陽明病"], "desc": "特徵：發汗不解，反蒸蒸發熱。正陽陽明有熱但裏實較不嚴重。\n\n【李克紹補充】\n蒸蒸發熱（裡熱）但僅三日未至大實。三日即發熱代表素有內熱。"}, {"formula": "芍藥甘草附子湯", "tags": ["太陽變證", "惡寒"], "desc": "特徵：發汗病不解，反惡寒者（此不解非表不解）。"}, {"formula": "小承氣湯", "tags": ["陽明病", "實熱"], "desc": "特徵：熱不甚大便已硬；結在胃而非大腸（心下硬滿）只可和胃；腹大滿不通但熱未潮/大承氣禁忌。\n\n【李克紹補充】\n譫語潮熱但脈滑而疾（正氣不足大承氣禁忌）。大承氣攻後復熱用以攻餘邪。"}, {"formula": "茵陳蒿湯", "tags": ["陽明變證", "黃疸", "濕熱"], "desc": "特徵：濕熱阻礙膽汁疏泄，心中懊憹必發黃。"}, {"formula": "麻黃連翹赤小豆湯", "tags": ["陽明變證", "濕熱", "陽明兼證", "黃疸"], "desc": "特徵：無汗，腹滿不顯，不渴，身熱突出。\n\n【李克紹補充】\n無汗為主，小便不利腹滿不重。"}, {"formula": "豬苓湯", "tags": ["陽明變證", "濕熱", "口渴"], "desc": "特徵：裡熱夾濕不阻膽汁。發熱、渴欲飲水、小便不利（不懊憹不發黃）。"}, {"formula": "梔子柏皮湯", "tags": ["陽明變證", "黃疸"], "desc": "特徵：介於茵陳蒿與麻黃赤小豆間，表裡分不出層次。"}, {"formula": "犀角地黃湯", "tags": ["陽明變證", "出血"], "desc": "特徵：陽明之衄為熱入血分。"}, {"formula": "白通湯", "tags": ["少陰病", "水火兩虛"], "desc": "特徵：腎精根本告竭。脈微自利為火虛；渴為精虛。"}, {"formula": "甘草湯", "tags": ["少陰咽痛"], "desc": "特徵：二三日咽痛者最輕。"}, {"formula": "桔梗湯", "tags": ["少陰咽痛"], "desc": "特徵：咽痛不差者。"}, {"formula": "苦酒湯", "tags": ["少陰咽痛"], "desc": "特徵：咽中傷，生瘡，聲不出者。"}, {"formula": "半夏散及湯", "tags": ["少陰咽痛", "痰飲"], "desc": "特徵：紅腫閉塞者。用半夏消痰開結表示兼有痰涎。"}, {"formula": "黃芩黃連乾薑人參湯", "tags": ["厥陰病", "嘔吐"], "desc": "特徵：寒格，內寒格拒，食入即吐。"}, {"formula": "桂枝加葛根湯", "tags": ["太陽兼證", "津液不足"], "desc": "邪入經輸，阻礙津液輸布，故用葛根升津。"}, {"formula": "桂枝去芍藥加附子湯", "tags": ["太陽兼證", "虛寒"], "desc": "微寒兼脈促胸滿（故去芍藥）。金匱中為脈浮虛而澀者，桂枝附子湯主之。"}, {"formula": "桂枝麻黃各半湯", "tags": ["太陽病", "欲癒"], "desc": "八九日「如瘧狀」為欲癒，非往來寒熱。若形似瘧一日再發用桂二麻一，兼裏熱用桂二越婢一。"}, {"formula": "芍藥甘草湯", "tags": ["太陽變證", "變虛"], "desc": "發汗病不解，反惡寒者（身熱已退惡寒增重，內外俱虛）。"}, {"formula": "桂枝人參湯", "tags": ["太陽變證", "協熱利"], "desc": "協熱而利，心下痞硬表裡不解（表熱與下利同見）。"}, {"formula": "赤石脂禹餘糧湯", "tags": ["太陽變證", "下利"], "desc": "下焦（大腸）利太嚴重，理中湯無效時用。"}, {"formula": "大陷胸丸", "tags": ["太陽變證", "結胸"], "desc": "項強如柔痙狀（熱與痰水結於偏上，津液不布）。臟結為內部臟器虛寒氣血凝滯（飲食如故）。"}, {"formula": "大黃黃連瀉心湯", "tags": ["太陽變證", "痞證"], "desc": "心下痞按之濡，關上浮（下後陽氣鬱於胃部）。兼惡寒汗出加附子。"}, {"formula": "旋覆代赭湯", "tags": ["太陽變證", "痞證"], "desc": "心下痞硬，噎氣不除。"}, {"formula": "十棗湯", "tags": ["太陽變證", "痞證"], "desc": "脅下停飲致痞。"}, {"formula": "桂枝去芍藥加蜀漆牡蠣龍骨救逆湯", "tags": ["太陽火逆"], "desc": "火劫迫之亡陽驚狂，臥起不安（火氣內攻神明浮越）。輕症（未驚狂）用桂甘龍牡。"}, {"formula": "甘草附子湯", "tags": ["風濕", "疼痛"], "desc": "風濕深至骨關節（骨節煩疼掣痛），重用甘草緩急。"}, {"formula": "梔子豉湯", "tags": ["陽明病", "加減"], "desc": "脈浮緊、咽燥口苦心中懊憹（熱將入裡且連表）。少氣加甘草，嘔加生薑，腹滿去豉加枳朴。"}, {"formula": "吳茱萸湯", "tags": ["陽明變證", "嘔吐"], "desc": "食谷欲嘔（病在胃）。胃寒嘔吐（朝食暮吐）；胃熱嘔吐（食入即吐）。"}, {"formula": "葛根湯", "tags": ["合病並病", "下利"], "desc": "太陽陽明合病必下利（表閉津液不宣）。嘔者加半夏。"}, {"formula": "黃芩湯", "tags": ["合病並病", "下利"], "desc": "太陽少陽合病下利。嘔者加半夏生薑。兼口苦。"}, {"formula": "附子湯", "tags": ["少陰寒化", "疼痛"], "desc": "真武去薑加參。口中和背惡寒/體痛手足寒脈沉。"}, {"formula": "桃花湯", "tags": ["少陰寒化", "下利"], "desc": "下利便膿血（寒濕血行阻滯出血）。"}, {"formula": "白頭翁湯", "tags": ["厥陰病", "下利"], "desc": "下利欲飲水（熱利）。"}, {"formula": "牡蠣澤瀉散", "tags": ["差後癆復", "水腫"], "desc": "大病差後，腰以下有水氣（實證）。"}, {"formula": "升降散", "tags": ["鬱火", "清熱"], "desc": "方解：僵蠶、蟬蜕疏上焦散濁氣。\n應用：凡鬱火皆可用。脈因鬱而沉（嚴重類虛寒）；鬱熱上衝面赤（暗滯）；外寒內熱。"}, {"formula": "杏仁湯", "tags": ["感冒", "濕熱"], "desc": "組成：杏黃芩翹滑桑茯蔻梨。\n應用：感寒動溫、寒溫並發，風寒溼熱相引（名老常用柴胡杏仁湯 = 杏仁湯+柴芩夏）。"}, {"formula": "當歸拈痛湯", "tags": ["濕熱", "皮膚疾病", "關節痛"], "desc": "應用：清濕熱兼袪風（羌風升葛）。風濕熱關節痛、各種濕熱皮膚病。"}, {"formula": "選奇湯", "tags": ["頭痛", "風熱"], "desc": "組成：防風 羌活 黃芩（陽明經加芷膏）。\n應用：眉棱骨痛、眉間痛特效。風邪襲頭面鬱久化熱。"}, {"formula": "化肝煎", "tags": ["肝火", "清熱"], "desc": "組成：青陳芍丹梔澤土貝。\n應用：清化肝經鬱火（肝氣阻滯不受升散）。對比逍遙散（木不疏土用升散）與龍膽（濕熱下注）。"}, {"formula": "散偏湯", "tags": ["偏頭痛", "肝膽"], "desc": "組成：芎芷芍芥香柴郁草。\n應用：偏頭痛，肝膽氣郁挾痰濁瘀血。郁李仁通利主降制風藥。嚴重加全蠍。"}, {"formula": "竹皮大棗丸", "tags": ["虛熱", "女科"], "desc": "組成：竹茹 石膏 桂枝 甘草 白薇。\n應用：產後/經期虛熱煩躁嘔逆。心陰虛用甘麥大棗，鬱而化熱用此。"}, {"formula": "蒼朮復煎散", "tags": ["風濕", "痹痛"], "desc": "組成：紅黃柴藁澤朮升羌蒼。\n應用：祛風濕痹痛（脾虛生濕致痹）。"}, {"formula": "三奇散", "tags": ["痢疾", "裏急後重"], "desc": "組成：黃耆 防風 枳殼。\n應用：補氣散肝行滯，治痢疾裏急後重久不解。"}, {"formula": "甘露飲", "tags": ["陰虛", "濕熱", "口瘡"], "desc": "組成：生地 熟地 天冬 麥冬 石斛 甘草 枳殼 枇杷葉 茵陳 黃芩。\n應用：脾胃陰虛兼濕熱內蘊（常用治口瘡）。養陰+清熱利濕+降氣。"}, {"formula": "引火湯", "tags": ["虛火", "陰虛"], "desc": "組成：熟地 麥冬 五味子 巴戟天 茯苓。\n應用：火因水虧無可藏（下元虛損陽浮越）。李可治三叉神經痛加芍甘、搜風、細辛。可合甘露飲治口瘡。"}, {"formula": "茯苓飲", "tags": ["脾虛", "氣滯"], "desc": "組成：茯朮參薑枳陳。胡老常加半夏。"}, {"formula": "二加龍骨牡蠣湯", "tags": ["虛陽浮越", "虛汗"], "desc": "組成：桂龍牡去桂加白薇 附子。\n應用：虛弱浮熱汗出（虛陽浮越火不歸元）。臨床可加桂枝交心腎。"}, {"formula": "風引湯", "tags": ["肝風", "中風", "癲癇"], "desc": "應用：因風而引（肝陽化風），鎮肝熄風先祖。治癲癇中風、肝風內動之腰背痛。"}, {"formula": "八味大發散", "tags": ["眼疾", "外寒內熱"], "desc": "組成：麻藁芷芎蔓防細薑羌。\n應用：眼部翳障（外寒內熱，需清熱亦需辛溫散寒搜風）。"}, {"formula": "清空膏", "tags": ["頭痛", "風熱"], "desc": "組成：芎柴連防羌草芩。\n應用：風溼熱上壅頭目，偏正頭痛。"}, {"formula": "清上蠲痛湯", "tags": ["頭痛"], "desc": "應用：一切頭痛，不論偏正新久。當歸川芎活血，芩麥養陰，風藥輕用以溫燥。"}, {"formula": "升陷湯", "tags": ["氣陷", "胸悶"], "desc": "組成：耆知柴桔升。\n應用：大氣下陷之胸悶（需與氣郁鑑別）。黃耆升氣>補氣，過重反不升。抑鬱虛證。"}, {"formula": "升陽益胃湯", "tags": ["脾虛濕盛", "帶下"], "desc": "應用：脾虛濕盛帶下（比完帶湯快）。培土生金治肺病喘咳。脾虛濕熱泄瀉。"}, {"formula": "小續命湯", "tags": ["中風", "扶正"], "desc": "組成：麻防桂風杏芩芎芍薑附參草。\n應用：祛風扶正（中風後遺症）。"}, {"formula": "滋腎通關丸", "tags": ["濕熱", "下焦"], "desc": "組成：柏知桂。\n應用：下焦濕熱兼下元虛損（尿道炎八正散無效者、前列腺、癃閉）。"}, {"formula": "清震湯", "tags": ["頭痛", "濕鬱"], "desc": "組成：升蒼荷。\n應用：風邪深閉清竅之雷頭風（頑固頭痛，天氣變化加重）。濕郁致脾失升降（小兒便秘）。"}, {"formula": "梔子金花湯", "tags": ["血熱", "中風"], "desc": "組成：連芩柏黃梔。\n應用：血熱旺盛中風（禁用辛開防火上炎）。"}, {"formula": "封髓丹", "tags": ["相火", "腎虛"], "desc": "組成：柏砂草（加三才：天冬地黃人參）。\n應用：腎陰不足相火旺動（治淋）。"}, {"formula": "連梅湯", "tags": ["暑熱", "陰傷"], "desc": "組成：連麥地膠梅。\n應用：暑入少陰肝腎陰傷；熱痢。"}, {"formula": "理痰湯", "tags": ["化痰", "哮喘"], "desc": "組成：芡半茯陳芝柏芍。\n應用：重用芡實收澀痰源，芝柏潤半夏。標本同治。頑固小兒哮喘。"}, {"formula": "升陽散火湯", "tags": ["火熱", "開胃"], "desc": "體會：醫案用於開胃（風藥亦可開胃進食）。"}, {"formula": "百合湯", "tags": ["胃痛", "氣鬱化火"], "desc": "組成：百合 烏藥。\n應用：氣鬱化火熱積中脘之心口痛。常合丹參、四逆散、川楝子。"}, {"formula": "柏葉湯", "tags": ["出血"], "desc": "應用：非熱性出血且久治不愈加味。止血後需扶正。"}, {"formula": "奔豚湯", "tags": ["奔豚", "肝氣"], "desc": "組成：李根皮 芩葛芎歸芍半薑草。\n應用：肝氣奔豚（驚恐得之）。養血平肝清熱降逆。亦治肝氣鬱滯梅核氣。"}, {"formula": "柴前連梅飲", "tags": ["虛熱", "骨蒸"], "desc": "組成：柴前胡黃連烏梅。\n應用：不明原因發熱、骨蒸潮熱難解良方。"}, {"formula": "當歸飲子", "tags": ["血虛", "風燥", "皮膚疾病"], "desc": "應用：血虛風燥濕疹。"}, {"formula": "二金湯", "tags": ["黃疸", "腹水"], "desc": "組成：雞內金 海金沙 厚朴 大腹皮 豬苓 通草。\n應用：黃疸濕熱兼腹脹、肝炎硬化腹水。有積加鱉甲牡蠣。"}, {"formula": "枸橘湯", "tags": ["男科", "疏肝濕熱"], "desc": "組成：枸橘 川楝 秦艽 陳皮 防風 澤 赤芍 草。\n應用：睪丸炎、精索靜脈曲張（子癰）。較橘核丸多清濕熱。"}, {"formula": "栝樓紅花甘草湯", "tags": ["神經痛", "帶狀皰疹"], "desc": "應用：帶狀皰疹神經痛。栝樓平肝緩急。大便稀減栝樓。"}, {"formula": "會厭逐瘀湯", "tags": ["咽喉腫塊", "瘀血", "氣鬱化火"], "desc": "組成：血府去芎膝加玄參。\n應用：聲帶會厭結節。肝鬱化火熬津。痰重加半夏白芥，肺熱加桑皮地骨。"}, {"formula": "濟生烏梅丸", "tags": ["出血", "息肉"], "desc": "組成：烏梅 僵蠶。\n應用：腸風下血，各種息肉出血（鮮血）。息肉專藥：烏梅僵蠶威靈仙。"}, {"formula": "健固湯", "tags": ["脾腎陽虛", "水腫", "帶下"], "desc": "組成：參朮茯戟薏。\n應用：經前水腫帶下陰道出水。脾腎陽虛兼水飲。巴戟天代桂不燥。"}, {"formula": "可保立蘇湯", "tags": ["內風", "氣血兩虛"], "desc": "應用：氣血兩虛不能上達致內風。動風合補陽還五，重用黃耆。"}, {"formula": "理陰煎", "tags": ["陰陽兩虛", "虛熱"], "desc": "組成：熟地 歸 草 薑 (桂)。\n應用：理中變方，填補真陰。溫陽利水過度致真陰亦虛。治虛熱盜汗、高血壓。"}, {"formula": "六和丸", "tags": ["濕滯"], "desc": "應用：類似藿香正氣散。"}, {"formula": "清海丸", "tags": ["崩漏", "陰虛火旺"], "desc": "應用：腎陰虛火旺崩漏（功能性子宮出血）。可加阿膠二至丸。"}, {"formula": "三痺湯", "tags": ["痹痛"], "desc": "組成：獨活寄生去寄生加耆斷。"}, {"formula": "三化湯", "tags": ["中風", "痰熱瘀阻"], "desc": "組成：大黃 厚朴 枳實 羌活。\n應用：中風（梗塞/出血）瀉熱醒神。常合抵當/升降散。痰熱瘀阻加菖蒲南星。"}, {"formula": "上焦宣痺湯", "tags": ["氣機", "痰濁"], "desc": "組成：枇杷 鬱 射 通 豉。\n應用：濕阻氣機/痰濁阻肺（喘咳、梅核氣、呃逆）。豆豉通草開肺氣。"}, {"formula": "上中下通用痛風方", "tags": ["痛風", "痹痛"], "desc": "應用：袪風除濕+清熱化痰+活血化瘀。萬用但莫忘對證加減。"}, {"formula": "胃關煎", "tags": ["久瀉", "脾腎陽虛"], "desc": "組成：熟地 藥 扁 草 薑 吳 朮。\n應用：溫中止瀉（熟地陰中求陽，久瀉亡陰）。合四神丸。"}, {"formula": "馴龍湯", "tags": ["頭痛", "肝陽上亢", "血虛"], "desc": "應用：血虛肝陽上亢頭痛（女性偏頭痛）。白芍需重用。"}, {"formula": "抑肝散", "tags": ["動風", "疏肝"], "desc": "組成：柴鉤芎歸茯朮草。\n應用：肝虛熱/痰熱動風。實為疏養肝，常加半夏陳皮僵蠶栝樓。"}, {"formula": "益黃散", "tags": ["泄瀉", "兒科"], "desc": "組成：陳青丁訶草。\n應用：小兒脾虛泄瀉、脾疳。"}, {"formula": "援絕神丹", "tags": ["慢性腸炎", "痢疾"], "desc": "組成：芍歸枳檳木滑萊草。\n應用：重用歸芍養肝血不抑脾，枳檳萊去穢積。治建脾腎方無效之慢性腸炎痢疾。"}, {"formula": "竹葉湯", "tags": ["外感", "產後"], "desc": "應用：產後外感，體虛外感。"}];
 
-        // Extracted unique tags
-        const allTags = [...new Set(notes.flatMap(n => n.tags))].sort();
+        // Extracted unique tags and sort by length/alphabet
+        const allTags = [...new Set(notes.flatMap(n => n.tags))].sort((a,b) => {
+            if (a.includes("類") && !b.includes("類")) return -1;
+            if (!a.includes("類") && b.includes("類")) return 1;
+            return a.localeCompare(b);
+        });
         let activeTags = new Set();
 
         const tagsContainer = document.getElementById('tagsContainer');
@@ -88,19 +95,22 @@
         // Render Tags
         allTags.forEach(tag => {
             const btn = document.createElement('button');
-            btn.className = 'tag-btn bg-white text-gray-600 px-4 py-2 rounded-full text-sm font-medium border border-gray-200 hover:bg-gray-50';
-            btn.innerHTML = `<i class="fa-solid fa-hashtag text-gray-400 mr-1 text-xs"></i>${tag}`;
+            const isCategory = tag.includes("類") || tag.includes("病");
+            btn.className = `tag-btn bg-white text-gray-600 px-3 py-1.5 rounded-md text-sm font-medium border border-gray-200 hover:bg-blue-50 ${isCategory ? 'border-l-4 border-l-blue-400' : ''}`;
+            btn.innerHTML = `<i class="fa-solid ${isCategory ? 'fa-folder-open' : 'fa-hashtag'} text-gray-400 mr-1 text-xs"></i>${tag}`;
             btn.onclick = () => {
                 if (activeTags.has(tag)) {
                     activeTags.delete(tag);
-                    btn.classList.remove('active');
-                    btn.querySelector('i').classList.remove('text-blue-200');
+                    btn.classList.remove('active', 'bg-blue-600', 'text-white', 'border-blue-600');
+                    btn.classList.add('bg-white', 'text-gray-600');
+                    btn.querySelector('i').classList.remove('text-white');
                     btn.querySelector('i').classList.add('text-gray-400');
                 } else {
                     activeTags.add(tag);
-                    btn.classList.add('active');
+                    btn.classList.remove('bg-white', 'text-gray-600');
+                    btn.classList.add('active', 'bg-blue-600', 'text-white', 'border-blue-600');
                     btn.querySelector('i').classList.remove('text-gray-400');
-                    btn.querySelector('i').classList.add('text-blue-200');
+                    btn.querySelector('i').classList.add('text-white');
                 }
                 renderNotes();
             };
@@ -131,19 +141,19 @@
             noteCount.innerText = filteredNotes.length;
 
             if(filteredNotes.length === 0) {
-                notesContainer.innerHTML = `<div class="col-span-1 md:col-span-2 text-center py-8 text-gray-400"><i class="fa-solid fa-inbox text-4xl mb-3"></i><p>沒有符合條件的筆記</p></div>`;
+                notesContainer.innerHTML = `<div class="col-span-1 md:col-span-2 text-center py-12 text-gray-400"><i class="fa-solid fa-box-open text-4xl mb-3"></i><p>沒有符合條件的筆記</p></div>`;
                 return;
             }
 
             filteredNotes.forEach(n => {
                 const el = document.createElement('div');
-                el.className = 'p-5 border border-gray-100 rounded-xl hover:shadow-md transition-shadow bg-slate-50 flex flex-col h-full';
+                el.className = 'p-5 border border-gray-200 rounded-xl hover:shadow-lg hover:border-blue-300 transition-all bg-white flex flex-col h-full';
                 el.innerHTML = `
-                    <div class="flex justify-between items-start mb-3">
-                        <h3 class="text-xl font-bold text-blue-900">${highlightText(n.formula, query)}</h3>
+                    <div class="flex justify-between items-start mb-3 border-b border-gray-100 pb-2">
+                        <h3 class="text-xl font-extrabold text-blue-900">${highlightText(n.formula, query)}</h3>
                     </div>
-                    <div class="flex gap-1 flex-wrap mb-3">
-                        ${n.tags.map(t => `<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded shadow-sm">#${t}</span>`).join('')}
+                    <div class="flex gap-1.5 flex-wrap mb-4">
+                        ${n.tags.map(t => `<span class="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded shadow-sm border border-slate-200">#${t}</span>`).join('')}
                     </div>
                     <p class="text-gray-700 text-sm whitespace-pre-wrap flex-grow leading-relaxed">${highlightText(n.desc, query)}</p>
                 `;
@@ -158,8 +168,8 @@
             comp2.add(new Option(n.formula, n.formula));
         });
         
-        comp1.value = "桂枝加龍骨牡蠣湯";
-        comp2.value = "柴胡加龍骨牡蠣湯";
+        comp1.value = "苓桂朮甘湯";
+        comp2.value = "真武湯";
 
         function updateCompare() {
             const f1 = notes.find(n => n.formula === comp1.value);
@@ -168,36 +178,37 @@
             let desc1 = f1 ? f1.desc : '';
             let desc2 = f2 ? f2.desc : '';
             
-            const diffKeywords = ['有力', '無力', '脹滿', '無脹感', '表證', '無表證', '腹滿', '便秘', '自汗', '無汗'];
+            // Comprehensive diff keywords for TCM
+            const diffKeywords = ['有力', '無力', '脹滿', '無脹感', '表證', '無表證', '腹滿', '便秘', '自汗', '無汗', '大熱', '無熱', '實熱', '虛寒', '陰虛', '陽虛', '口渴', '不渴'];
             diffKeywords.forEach(kw => {
                 if (desc1.includes(kw) && !desc2.includes(kw)) {
-                    desc1 = desc1.replace(new RegExp(kw, 'g'), `<span class="bg-red-100 text-red-800 font-bold px-1 rounded">${kw}</span>`);
+                    desc1 = desc1.replace(new RegExp(kw, 'g'), `<span class="bg-red-100 text-red-800 font-bold px-1 rounded border border-red-200">${kw}</span>`);
                 }
                 if (desc2.includes(kw) && !desc1.includes(kw)) {
-                    desc2 = desc2.replace(new RegExp(kw, 'g'), `<span class="bg-red-100 text-red-800 font-bold px-1 rounded">${kw}</span>`);
+                    desc2 = desc2.replace(new RegExp(kw, 'g'), `<span class="bg-red-100 text-red-800 font-bold px-1 rounded border border-red-200">${kw}</span>`);
                 }
             });
 
             if (f1) {
                 comp1Content.innerHTML = `
-                    <div class="flex items-center justify-between mb-3 border-b border-gray-200 pb-2">
-                        <div class="font-bold text-2xl text-blue-900">${f1.formula}</div>
+                    <div class="flex items-center justify-between mb-3 border-b-2 border-indigo-100 pb-2">
+                        <div class="font-extrabold text-2xl text-indigo-900">${f1.formula}</div>
                     </div>
                     <div class="flex flex-wrap gap-1 mb-4">
-                        ${f1.tags.map(t => `<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">#${t}</span>`).join('')}
+                        ${f1.tags.map(t => `<span class="bg-indigo-50 text-indigo-700 text-xs px-2 py-1 rounded border border-indigo-200">#${t}</span>`).join('')}
                     </div>
-                    <div class="whitespace-pre-wrap text-sm">${desc1}</div>
+                    <div class="whitespace-pre-wrap text-sm leading-relaxed">${desc1}</div>
                 `;
             }
             if (f2) {
                 comp2Content.innerHTML = `
-                    <div class="flex items-center justify-between mb-3 border-b border-gray-200 pb-2">
-                        <div class="font-bold text-2xl text-blue-900">${f2.formula}</div>
+                    <div class="flex items-center justify-between mb-3 border-b-2 border-indigo-100 pb-2">
+                        <div class="font-extrabold text-2xl text-indigo-900">${f2.formula}</div>
                     </div>
                     <div class="flex flex-wrap gap-1 mb-4">
-                        ${f2.tags.map(t => `<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">#${t}</span>`).join('')}
+                        ${f2.tags.map(t => `<span class="bg-indigo-50 text-indigo-700 text-xs px-2 py-1 rounded border border-indigo-200">#${t}</span>`).join('')}
                     </div>
-                    <div class="whitespace-pre-wrap text-sm">${desc2}</div>
+                    <div class="whitespace-pre-wrap text-sm leading-relaxed">${desc2}</div>
                 `;
             }
         }
